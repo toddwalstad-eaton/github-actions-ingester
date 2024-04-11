@@ -3,7 +3,7 @@
 This is a GitHub action for ingesting the information about a completed GitHub Actions Workflow
 as a Business Event into [Dynatrace Grail](https://www.dynatrace.com/monitoring/platform/dynatrace-grail/). It's
 configured for the repository itself.
-See [dynatrace-ingest.yml](https://github.com/SemanticlabsGmbH/dynatrace-workflow-ingester/blob/main/.github/workflows/dynatrace-ingest.yml).
+See [action.yml](https://github.com/Dynatrace/github-actions-ingester/blob/main/action.yml).
 
 Here's an example configuration:
 
