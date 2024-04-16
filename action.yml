@@ -1,6 +1,6 @@
 name: 'Dynatrace Workflow Ingester'
 description: 'Ingests a workflow run into Grail'
-author: 'Semanticlabs GmbH'
+author: 'Dynatrace'
 inputs:
   dt-client-id:
     required: true
