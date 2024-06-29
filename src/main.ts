@@ -48,7 +48,7 @@ async function run(): Promise<void> {
       JSON.stringify(cloudEvent),
       {
         "content-type": "application/cloudevent+json",
-        authorization: `Api-Token ${apiToken}`, // Use the API token directly for authentication
+        authorization: 'Api-Token '.concat(apiToken), // Use the API token directly for authentication
       }
     );
     core.info(await response.readBody());
