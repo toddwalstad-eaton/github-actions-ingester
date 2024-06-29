@@ -39,23 +39,45 @@ function buildCloudEvent(payload: WebhookPayload): unknown {
 
 async function run(): Promise<void> {
   try {
-    const clientId = core.getInput('dt-client-id')
-    const clientSecret = core.getInput('dt-client-secret')
-    const environmentId = core.getInput('dt-environment-id')
-    const cloudEvent = buildCloudEvent(github.context.payload)
-    const dynatraceAccessToken = await getAccessToken(clientId, clientSecret)
+    const apiToken = core.getInput('dt-api-token'); // Assuming 'dt-api-token' is the name of the input for the API token
+    const environmentId = core.getInput('dt-environment-id');
+    const cloudEvent = buildCloudEvent(github.context.payload);
+    
     const response = await http.post(
       `https://${environmentId}.live.dynatrace.com/api/v2/bizevents/ingest`,
       JSON.stringify(cloudEvent),
       {
         'content-type': 'application/cloudevent+json',
-        authorization: `Bearer ${dynatraceAccessToken}`
+        authorization: `Api-Token ${apiToken}` // Use the API token directly for authentication
       }
-    )
-    core.info(await response.readBody())
+    );
+    core.info(await response.readBody());
   } catch (error) {
-    if (error instanceof Error) core.setFailed(error.message)
+    if (error instanceof Error) core.setFailed(error.message);
   }
 }
+
+run();
+
+// async function run(): Promise<void> {
+//   try {
+//     const clientId = core.getInput('dt-client-id')
+//     const clientSecret = core.getInput('dt-client-secret')
+//     const environmentId = core.getInput('dt-environment-id')
+//     const cloudEvent = buildCloudEvent(github.context.payload)
+//     const dynatraceAccessToken = await getAccessToken(clientId, clientSecret)
+//     const response = await http.post(
+//       `https://${environmentId}.live.dynatrace.com/api/v2/bizevents/ingest`,
+//       JSON.stringify(cloudEvent),
+//       {
+//         'content-type': 'application/cloudevent+json',
+//         authorization: `Bearer ${dynatraceAccessToken}`
+//       }
+//     )
+//     core.info(await response.readBody())
+//   } catch (error) {
+//     if (error instanceof Error) core.setFailed(error.message)
+//   }
+// }
 
 run()
